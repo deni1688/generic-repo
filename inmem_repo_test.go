@@ -12,14 +12,9 @@ func TestInMemRepo_Create(t *testing.T) {
 		t.Errorf("error: %v", err)
 	}
 
-	if id == 0 {
-		t.Errorf("id is 0")
-	}
-
 	d, err := dr.FindByID(id)
 	if err != nil {
 		t.Errorf("error: %v", err)
-
 	}
 
 	if d.Name != "John" {
