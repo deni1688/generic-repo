@@ -9,7 +9,6 @@ type Repo[T Model] interface {
 }
 
 type Model interface {
-	Driver | Vehicle
 	GetID() int
 	SetID(id int)
 	SetCreatedAt(createdAt string)

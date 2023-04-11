@@ -24,7 +24,6 @@ func TestInMemRepo_Create(t *testing.T) {
 
 func TestInMemRepo_FindAll(t *testing.T) {
 	dr := newInMemRepo[Driver](make(map[int]Driver))
-
 	_, _ = dr.Create(newDriver("John"))
 	_, _ = dr.Create(newDriver("Jane"))
 
@@ -45,13 +44,13 @@ func TestInMemRepo_Update(t *testing.T) {
 
 	driver := newDriver("Jane")
 	driver.SetID(id)
+
 	err := dr.Update(driver)
 	if err != nil {
 		t.Errorf("error: %v", err)
 	}
 
 	d, _ := dr.FindByID(id)
-
 	if d.Name != "Jane" {
 		t.Errorf("name is not Jane")
 	}
@@ -68,7 +67,6 @@ func TestInMemRepo_DeleteByID(t *testing.T) {
 	}
 
 	_, err = dr.FindByID(id)
-
 	if err.Error() != "not found" {
 		t.Errorf("error is nil but should be not found")
 	}
