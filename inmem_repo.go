@@ -49,6 +49,9 @@ func (i *inMemRepo[T]) Update(t T) error {
 }
 
 func (i *inMemRepo[T]) DeleteByID(id int) error {
+	i.mu.Lock()
+	defer i.mu.Unlock()
+	
 	if _, ok := i.data[id]; !ok {
 		return fmt.Errorf("not found")
 	}
