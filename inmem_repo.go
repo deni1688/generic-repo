@@ -3,18 +3,23 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"sync"
 	"time"
 )
 
 type inMemRepo[T Model] struct {
 	data map[int]T
+	mu   *sync.Mutex
 }
 
 func newInMemRepo[T Model](data map[int]T) *inMemRepo[T] {
-	return &inMemRepo[T]{data}
+	return &inMemRepo[T]{data, &sync.Mutex{}}
 }
 
 func (i *inMemRepo[T]) Create(t T) (int, error) {
+	i.mu.Lock()
+	defer i.mu.Unlock()
+
 	id := randomID()
 
 	t.SetID(id)
@@ -35,6 +40,9 @@ func (i *inMemRepo[T]) FindByID(id int) (*T, error) {
 }
 
 func (i *inMemRepo[T]) Update(t T) error {
+	i.mu.Lock()
+	defer i.mu.Unlock()
+
 	t.SetUpdatedAt(time.Now().Format(time.RFC3339))
 	i.data[t.GetID()] = t
 	return nil

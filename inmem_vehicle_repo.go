@@ -9,7 +9,7 @@ type inMemVehicleRepo struct {
 	*inMemRepo[Vehicle]
 }
 
-func newInMemVehicleRepo(data map[int]Vehicle) VehicleRepo {
+func newInMemVehicleRepo(data map[int]Vehicle) *inMemVehicleRepo {
 	return &inMemVehicleRepo{inMemRepo: newInMemRepo[Vehicle](data)}
 }
 
